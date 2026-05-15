@@ -75,6 +75,7 @@ function bindEvents() {
   document.getElementById("send-order").addEventListener("click", handleSendOrder);
   document.getElementById("cashier-form").addEventListener("submit", handleCloseAccount);
   document.getElementById("cashier-table").addEventListener("change", renderCashier);
+  document.getElementById("waiter-table").addEventListener("change", renderWaiterSummary);
 
   document.addEventListener("click", (event) => {
     const target = event.target.closest("[data-screen-target], [data-action], [data-product-id], [data-remove-index]");
@@ -238,7 +239,7 @@ function updateOrderStatus(orderId, status) {
     order.id === orderId ? { ...order, status } : order
   ));
   setOrders(orders);
-  renderKitchen();
+  renderAll();
 }
 
 function populateStaticOptions() {
@@ -271,9 +272,57 @@ function fillSelect(elementId, values) {
 }
 
 function renderAll() {
+  renderDashboard();
+  renderWaiterSummary();
   renderDraft();
+  renderKitchenSummary();
   renderKitchen();
   renderCashier();
+  renderSalesHistory();
+}
+
+function renderDashboard() {
+  const container = document.getElementById("dashboard-stats");
+  if (!container) return;
+
+  const activeOrders = getActiveOrders();
+  const readyOrders = activeOrders.filter((order) => order.status === "Pronto");
+  const inPrepOrders = activeOrders.filter((order) => order.status === "Em preparo");
+  const sales = getSales();
+
+  container.innerHTML = [
+    makeStatCard("Mesas abertas", getOpenTables(activeOrders).length, "Com consumo em aberto"),
+    makeStatCard("Pedidos ativos", activeOrders.length, "Visíveis para cozinha e caixa"),
+    makeStatCard("Em preparo", inPrepOrders.length, "Acompanhamento da cozinha"),
+    makeStatCard("Prontos", readyOrders.length, `Vendas: ${formatCurrency(calculateSalesTotal(sales))}`)
+  ].join("");
+}
+
+function renderWaiterSummary() {
+  const container = document.getElementById("waiter-summary");
+  if (!container) return;
+
+  const table = document.getElementById("waiter-table").value || tables[0];
+  const draftTotal = state.draftItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const tableOrders = getActiveOrdersByTable(table);
+
+  container.innerHTML = [
+    makeSummaryCard("Mesa selecionada", table, "Destino do pedido"),
+    makeSummaryCard("Itens no rascunho", state.draftItems.length, "Antes do envio"),
+    makeSummaryCard("Total parcial", formatCurrency(draftTotal), "Pedido atual"),
+    makeSummaryCard("Comandas abertas", tableOrders.length, "Para esta mesa")
+  ].join("");
+}
+
+function renderKitchenSummary() {
+  const container = document.getElementById("kitchen-summary");
+  if (!container) return;
+
+  const activeOrders = getActiveOrders();
+  container.innerHTML = statusOptions.map((status) => {
+    const count = activeOrders.filter((order) => order.status === status).length;
+    return makeSummaryCard(status, count, "Pedidos em aberto");
+  }).join("") + makeSummaryCard("Mesas ativas", getOpenTables(activeOrders).length, "Com pedidos");
 }
 
 function renderDraft() {
@@ -297,6 +346,11 @@ function renderDraft() {
   }
 
   document.getElementById("draft-total").textContent = formatCurrency(total);
+  const sendOrderButton = document.getElementById("send-order");
+  if (sendOrderButton) {
+    sendOrderButton.disabled = state.draftItems.length === 0;
+  }
+  renderWaiterSummary();
 }
 
 function renderKitchen() {
@@ -366,6 +420,37 @@ function renderCashier() {
   }
 
   document.getElementById("cashier-total").textContent = formatCurrency(total);
+  const closeAccountButton = document.getElementById("close-account");
+  if (closeAccountButton) {
+    closeAccountButton.disabled = activeOrders.length === 0;
+  }
+}
+
+function renderSalesHistory() {
+  const container = document.getElementById("sales-history");
+  if (!container) return;
+
+  const sales = getSales()
+    .slice()
+    .sort((a, b) => new Date(b.closedAt) - new Date(a.closedAt))
+    .slice(0, 5);
+
+  if (sales.length === 0) {
+    container.className = "sales-list empty-state";
+    container.textContent = "Nenhuma venda finalizada.";
+    return;
+  }
+
+  container.className = "sales-list";
+  container.innerHTML = sales.map((sale) => `
+    <div class="sale-row">
+      <div>
+        <strong>${sale.table}</strong>
+        <span>${formatTime(sale.closedAt)} - ${sale.paymentMethod} - ${sale.items.length} item(ns)</span>
+      </div>
+      <strong>${formatCurrency(sale.total)}</strong>
+    </div>
+  `).join("");
 }
 
 function showScreen(screenId) {
@@ -377,7 +462,18 @@ function showScreen(screenId) {
     element.hidden = screenId === "login-screen";
   });
 
+  document.querySelectorAll("[data-screen-target]").forEach((element) => {
+    const isActive = element.dataset.screenTarget === screenId;
+    element.classList.toggle("is-active", isActive);
+    if (isActive) {
+      element.setAttribute("aria-current", "page");
+    } else {
+      element.removeAttribute("aria-current");
+    }
+  });
+
   renderAll();
+  window.scrollTo(0, 0);
 }
 
 function showMessage(elementId, text, type = "success") {
@@ -418,12 +514,24 @@ function getActiveOrdersByTable(table) {
   return getOrders().filter((order) => order.table === table && !order.archived);
 }
 
+function getActiveOrders() {
+  return getOrders().filter((order) => !order.archived);
+}
+
+function getOpenTables(orders) {
+  return [...new Set(orders.map((order) => order.table))];
+}
+
 function calculateOrderTotal(order) {
   return order.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 }
 
 function calculateOrdersTotal(orders) {
   return orders.reduce((sum, order) => sum + calculateOrderTotal(order), 0);
+}
+
+function calculateSalesTotal(sales) {
+  return sales.reduce((sum, sale) => sum + sale.total, 0);
 }
 
 function readJson(key, fallback) {
@@ -454,6 +562,26 @@ function statusClass(status) {
     "Em preparo": "status-em-preparo",
     "Pronto": "status-pronto"
   }[status] || "status-recebido";
+}
+
+function makeStatCard(label, value, caption) {
+  return `
+    <div class="stat-card">
+      <span>${label}</span>
+      <strong>${value}</strong>
+      <small>${caption}</small>
+    </div>
+  `;
+}
+
+function makeSummaryCard(label, value, caption) {
+  return `
+    <div class="summary-card">
+      <span>${label}</span>
+      <strong>${value}</strong>
+      <small>${caption}</small>
+    </div>
+  `;
 }
 
 function makeId() {

@@ -3,28 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Protótipo profissional de comanda digital integrada para restaurante, com módulos de garçom, cozinha e caixa.">
+  <meta name="theme-color" content="#1f4d39">
   <title>Comanda Digital Integrada - Tempero de Maria</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Ir para o conteúdo</a>
   <header class="app-header" data-auth-only hidden>
-    <div>
-      <p class="eyebrow">Tempero de Maria</p>
-      <h1>Comanda Digital Integrada</h1>
+    <div class="brand-lockup">
+      <span class="brand-mark" aria-hidden="true">TM</span>
+      <div>
+        <p class="eyebrow">Tempero de Maria</p>
+        <h1>Comanda Digital Integrada</h1>
+      </div>
     </div>
     <div class="header-actions">
-      <button class="ghost-button" type="button" data-action="go-menu">Menu</button>
-      <button class="ghost-button" type="button" data-action="logout">Sair</button>
+      <nav class="top-nav" aria-label="Navegação principal">
+        <button class="ghost-button compact" type="button" data-screen-target="menu-screen">Menu</button>
+        <button class="ghost-button compact" type="button" data-screen-target="waiter-screen">Garçom</button>
+        <button class="ghost-button compact" type="button" data-screen-target="kitchen-screen">Cozinha</button>
+        <button class="ghost-button compact" type="button" data-screen-target="cashier-screen">Caixa</button>
+      </nav>
+      <button class="ghost-button compact" type="button" data-action="logout">Sair</button>
     </div>
   </header>
 
-  <main class="app-shell">
+  <main id="main-content" class="app-shell">
     <section id="login-screen" class="screen is-active">
       <div class="login-grid">
         <article class="card login-card">
-          <p class="eyebrow">Protótipo funcional</p>
-          <h2>Comanda Digital Integrada</h2>
-          <p class="muted">Restaurante Tempero de Maria</p>
+          <div class="brand-lockup login-brand">
+            <span class="brand-mark large" aria-hidden="true">TM</span>
+            <div>
+              <p class="eyebrow">Restaurante Tempero de Maria</p>
+              <h2>Comanda Digital Integrada</h2>
+            </div>
+          </div>
+          <p class="lead">Operação de salão, cozinha e caixa em um único fluxo digital.</p>
 
           <form id="login-form" class="form-stack">
             <label>
@@ -40,8 +56,10 @@
         </article>
 
         <article class="card qr-card">
-          <p class="eyebrow">Demonstração</p>
-          <h3>Acesse o protótipo pelo QR Code</h3>
+          <div>
+            <p class="eyebrow">Demonstração publicada</p>
+            <h3>Acesse o protótipo pelo QR Code</h3>
+          </div>
           <img class="qr-image" src="assets/qrcode-site.png" alt="QR Code para acessar o protótipo no GitHub Pages">
           <a class="plain-link" href="https://albertomateus9.github.io/comanda-digital-tempero-maria/" target="_blank" rel="noreferrer">
             albertomateus9.github.io/comanda-digital-tempero-maria
@@ -53,24 +71,30 @@
     <section id="menu-screen" class="screen">
       <div class="section-heading">
         <p class="eyebrow">Menu principal</p>
-        <h2>Escolha um módulo</h2>
-        <p class="muted">Fluxo básico: garçom registra, cozinha prepara e caixa fecha a conta.</p>
+        <h2>Visão operacional</h2>
+        <p class="muted">Pedidos, preparo e fechamento conectados em tempo real pelo navegador.</p>
       </div>
 
+      <div id="dashboard-stats" class="stats-grid" aria-label="Resumo da operação"></div>
+
       <div class="menu-grid">
-        <button class="module-button" type="button" data-screen-target="waiter-screen" data-testid="nav-waiter">
+        <button class="module-button accent-primary" type="button" data-screen-target="waiter-screen" data-testid="nav-waiter">
+          <span class="module-icon" aria-hidden="true">G</span>
           <span>Garçom</span>
-          <small>Registrar pedido</small>
+          <small>Registrar pedidos por mesa</small>
         </button>
-        <button class="module-button" type="button" data-screen-target="kitchen-screen" data-testid="nav-kitchen">
+        <button class="module-button accent-warn" type="button" data-screen-target="kitchen-screen" data-testid="nav-kitchen">
+          <span class="module-icon" aria-hidden="true">C</span>
           <span>Cozinha</span>
-          <small>Acompanhar preparo</small>
+          <small>Acompanhar preparo e status</small>
         </button>
-        <button class="module-button" type="button" data-screen-target="cashier-screen" data-testid="nav-cashier">
+        <button class="module-button accent-ready" type="button" data-screen-target="cashier-screen" data-testid="nav-cashier">
+          <span class="module-icon" aria-hidden="true">X</span>
           <span>Caixa</span>
-          <small>Fechar conta</small>
+          <small>Conferir consumo e fechar conta</small>
         </button>
         <button class="module-button danger" type="button" data-action="reset-data" data-testid="reset-data">
+          <span class="module-icon" aria-hidden="true">R</span>
           <span>Reiniciar dados</span>
           <small>Restaurar exemplos</small>
         </button>
@@ -83,12 +107,17 @@
       <div class="section-heading">
         <p class="eyebrow">Módulo do garçom</p>
         <h2>Registrar pedido</h2>
-        <p class="muted">Selecione a mesa, adicione itens e envie para a cozinha.</p>
+        <p class="muted">Monte a comanda com itens, quantidades e observações para a cozinha.</p>
       </div>
+
+      <div id="waiter-summary" class="summary-strip"></div>
 
       <div class="work-grid two-columns">
         <article class="card">
-          <h3>Novo item</h3>
+          <div class="card-title-block">
+            <h3>Novo item</h3>
+            <p>Cardápio amazônico cadastrado para a demonstração.</p>
+          </div>
           <form id="waiter-form" class="form-stack">
             <label>
               Mesa
@@ -121,7 +150,10 @@
 
         <article class="card">
           <div class="card-header">
-            <h3>Revisão do pedido</h3>
+            <div class="card-title-block">
+              <h3>Revisão do pedido</h3>
+              <p>Itens aguardando envio para a cozinha.</p>
+            </div>
             <button class="ghost-button compact" type="button" data-action="clear-draft">Limpar</button>
           </div>
           <div id="draft-items" class="order-list empty-state">Nenhum item adicionado.</div>
@@ -141,6 +173,7 @@
         <h2>Pedidos recebidos</h2>
         <p class="muted">Atualize o status para manter salão e caixa sincronizados.</p>
       </div>
+      <div id="kitchen-summary" class="summary-strip"></div>
       <div id="kitchen-orders" class="orders-grid" data-testid="kitchen-orders"></div>
     </section>
 
@@ -148,12 +181,15 @@
       <div class="section-heading">
         <p class="eyebrow">Módulo do caixa</p>
         <h2>Fechamento de conta</h2>
-        <p class="muted">Selecione a mesa, revise o consumo e finalize a venda.</p>
+        <p class="muted">Consolide consumo por mesa, escolha pagamento e arquive a venda.</p>
       </div>
 
       <div class="work-grid two-columns">
         <article class="card">
-          <h3>Dados da conta</h3>
+          <div class="card-title-block">
+            <h3>Dados da conta</h3>
+            <p>Somente pedidos em aberto entram no fechamento.</p>
+          </div>
           <form id="cashier-form" class="form-stack">
             <label>
               Mesa
@@ -167,13 +203,16 @@
                 <option>Pix</option>
               </select>
             </label>
-            <button class="primary-button" type="submit" data-testid="close-account">Fechar conta</button>
+            <button class="primary-button" type="submit" id="close-account" data-testid="close-account">Fechar conta</button>
           </form>
           <div id="cashier-message" class="message-area" role="status" aria-live="polite"></div>
         </article>
 
         <article class="card">
-          <h3>Itens consumidos</h3>
+          <div class="card-title-block">
+            <h3>Itens consumidos</h3>
+            <p>Resumo da comanda selecionada.</p>
+          </div>
           <div id="cashier-items" class="order-list empty-state">Selecione uma mesa para visualizar a conta.</div>
           <div class="total-row total-highlight">
             <span>Total</span>
@@ -181,6 +220,14 @@
           </div>
         </article>
       </div>
+
+      <article class="card sales-card">
+        <div class="card-title-block">
+          <h3>Últimas vendas</h3>
+          <p>Histórico local das contas finalizadas nesta demonstração.</p>
+        </div>
+        <div id="sales-history" class="sales-list empty-state">Nenhuma venda finalizada.</div>
+      </article>
     </section>
   </main>
 

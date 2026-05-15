@@ -12,13 +12,23 @@ Demonstrar, em uma página web estática, como um restaurante pode registrar ped
 
 - Login simulado aceitando qualquer usuário e senha.
 - Menu principal com módulos Garçom, Cozinha, Caixa e Reiniciar dados.
+- Painel operacional com indicadores de mesas abertas, pedidos ativos, preparo, prontos e vendas.
 - Cadastro de pedidos por mesa com produtos, quantidade e observação.
 - Persistência dos pedidos em `localStorage`.
 - Painel da cozinha com alteração de status: Recebido, Em preparo e Pronto.
 - Fechamento de conta por mesa com total automático e forma de pagamento.
 - Arquivamento dos pedidos finalizados e registro de venda.
+- Histórico local das últimas vendas finalizadas.
 - QR Code apontando para o GitHub Pages do projeto.
 - Layout responsivo para celular e desktop.
+
+## Refinamentos profissionais
+
+- Navegação superior por módulo após o login.
+- Estados vazios e botões desabilitados quando não há ação disponível.
+- Indicadores por etapa do fluxo para facilitar demonstrações.
+- Melhor contraste, foco visível e hierarquia de informação.
+- Estrutura preparada para publicação estática em GitHub Pages.
 
 ## Tecnologias usadas
 
