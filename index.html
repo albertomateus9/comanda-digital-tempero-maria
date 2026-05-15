@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comanda Digital Integrada - Tempero de Maria</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header" data-auth-only hidden>
+    <div>
+      <p class="eyebrow">Tempero de Maria</p>
+      <h1>Comanda Digital Integrada</h1>
+    </div>
+    <div class="header-actions">
+      <button class="ghost-button" type="button" data-action="go-menu">Menu</button>
+      <button class="ghost-button" type="button" data-action="logout">Sair</button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section id="login-screen" class="screen is-active">
+      <div class="login-grid">
+        <article class="card login-card">
+          <p class="eyebrow">Protótipo funcional</p>
+          <h2>Comanda Digital Integrada</h2>
+          <p class="muted">Restaurante Tempero de Maria</p>
+
+          <form id="login-form" class="form-stack">
+            <label>
+              Usuário
+              <input id="login-user" name="usuario" type="text" autocomplete="username" placeholder="Ex.: maria" data-testid="login-user">
+            </label>
+            <label>
+              Senha
+              <input id="login-password" name="senha" type="password" autocomplete="current-password" placeholder="Digite qualquer senha" data-testid="login-password">
+            </label>
+            <button class="primary-button full-width" type="submit" data-testid="login-submit">Entrar</button>
+          </form>
+        </article>
+
+        <article class="card qr-card">
+          <p class="eyebrow">Demonstração</p>
+          <h3>Acesse o protótipo pelo QR Code</h3>
+          <img class="qr-image" src="assets/qrcode-site.png" alt="QR Code para acessar o protótipo no GitHub Pages">
+          <a class="plain-link" href="https://albertomateus9.github.io/comanda-digital-tempero-maria/" target="_blank" rel="noreferrer">
+            albertomateus9.github.io/comanda-digital-tempero-maria
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <section id="menu-screen" class="screen">
+      <div class="section-heading">
+        <p class="eyebrow">Menu principal</p>
+        <h2>Escolha um módulo</h2>
+        <p class="muted">Fluxo básico: garçom registra, cozinha prepara e caixa fecha a conta.</p>
+      </div>
+
+      <div class="menu-grid">
+        <button class="module-button" type="button" data-screen-target="waiter-screen" data-testid="nav-waiter">
+          <span>Garçom</span>
+          <small>Registrar pedido</small>
+        </button>
+        <button class="module-button" type="button" data-screen-target="kitchen-screen" data-testid="nav-kitchen">
+          <span>Cozinha</span>
+          <small>Acompanhar preparo</small>
+        </button>
+        <button class="module-button" type="button" data-screen-target="cashier-screen" data-testid="nav-cashier">
+          <span>Caixa</span>
+          <small>Fechar conta</small>
+        </button>
+        <button class="module-button danger" type="button" data-action="reset-data" data-testid="reset-data">
+          <span>Reiniciar dados</span>
+          <small>Restaurar exemplos</small>
+        </button>
+      </div>
+
+      <div id="menu-message" class="message-area" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="waiter-screen" class="screen">
+      <div class="section-heading">
+        <p class="eyebrow">Módulo do garçom</p>
+        <h2>Registrar pedido</h2>
+        <p class="muted">Selecione a mesa, adicione itens e envie para a cozinha.</p>
+      </div>
+
+      <div class="work-grid two-columns">
+        <article class="card">
+          <h3>Novo item</h3>
+          <form id="waiter-form" class="form-stack">
+            <label>
+              Mesa
+              <select id="waiter-table" data-testid="waiter-table"></select>
+            </label>
+
+            <div>
+              <p class="label-title">Cardápio</p>
+              <div id="menu-products" class="product-list" aria-label="Produtos do cardápio"></div>
+            </div>
+
+            <label>
+              Produto
+              <select id="waiter-product" data-testid="waiter-product"></select>
+            </label>
+
+            <label>
+              Quantidade
+              <input id="waiter-quantity" type="text" inputmode="numeric" pattern="[0-9]*" value="1" data-testid="waiter-quantity">
+            </label>
+
+            <label>
+              Observação
+              <textarea id="waiter-note" rows="3" placeholder="Ex.: sem pimenta, separar caldo" data-testid="waiter-note"></textarea>
+            </label>
+
+            <button class="secondary-button" type="submit" data-testid="add-item">Adicionar ao pedido</button>
+          </form>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <h3>Revisão do pedido</h3>
+            <button class="ghost-button compact" type="button" data-action="clear-draft">Limpar</button>
+          </div>
+          <div id="draft-items" class="order-list empty-state">Nenhum item adicionado.</div>
+          <div class="total-row">
+            <span>Total parcial</span>
+            <strong id="draft-total">R$ 0,00</strong>
+          </div>
+          <button class="primary-button full-width" type="button" id="send-order" data-testid="send-order">Enviar pedido para a cozinha</button>
+          <div id="waiter-message" class="message-area" role="status" aria-live="polite"></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="kitchen-screen" class="screen">
+      <div class="section-heading">
+        <p class="eyebrow">Módulo da cozinha</p>
+        <h2>Pedidos recebidos</h2>
+        <p class="muted">Atualize o status para manter salão e caixa sincronizados.</p>
+      </div>
+      <div id="kitchen-orders" class="orders-grid" data-testid="kitchen-orders"></div>
+    </section>
+
+    <section id="cashier-screen" class="screen">
+      <div class="section-heading">
+        <p class="eyebrow">Módulo do caixa</p>
+        <h2>Fechamento de conta</h2>
+        <p class="muted">Selecione a mesa, revise o consumo e finalize a venda.</p>
+      </div>
+
+      <div class="work-grid two-columns">
+        <article class="card">
+          <h3>Dados da conta</h3>
+          <form id="cashier-form" class="form-stack">
+            <label>
+              Mesa
+              <select id="cashier-table" data-testid="cashier-table"></select>
+            </label>
+            <label>
+              Forma de pagamento
+              <select id="payment-method" data-testid="payment-method">
+                <option>Dinheiro</option>
+                <option>Cartão</option>
+                <option>Pix</option>
+              </select>
+            </label>
+            <button class="primary-button" type="submit" data-testid="close-account">Fechar conta</button>
+          </form>
+          <div id="cashier-message" class="message-area" role="status" aria-live="polite"></div>
+        </article>
+
+        <article class="card">
+          <h3>Itens consumidos</h3>
+          <div id="cashier-items" class="order-list empty-state">Selecione uma mesa para visualizar a conta.</div>
+          <div class="total-row total-highlight">
+            <span>Total</span>
+            <strong id="cashier-total">R$ 0,00</strong>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div>
+      <strong>Acesse o protótipo pelo QR Code</strong>
+      <span>GitHub Pages: albertomateus9.github.io/comanda-digital-tempero-maria</span>
+    </div>
+    <img class="footer-qr" src="assets/qrcode-site.png" alt="QR Code do protótipo">
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
