@@ -9,11 +9,11 @@ const STORAGE_KEYS = {
 const tables = ["Mesa 01", "Mesa 02", "Mesa 03", "Mesa 04", "Mesa 05"];
 
 const products = [
-  { id: "tacaca", name: "Tacacá", price: 15 },
-  { id: "manicoba", name: "Maniçoba", price: 30 },
-  { id: "suco-cupuacu", name: "Suco de Cupuaçu", price: 8 },
-  { id: "arroz-paraense", name: "Arroz Paraense", price: 22 },
-  { id: "vatapa", name: "Vatapá", price: 18 }
+  { id: "tacaca", name: "Tacacá", price: 15, image: "assets/dish-tacaca.svg" },
+  { id: "manicoba", name: "Maniçoba", price: 30, image: "assets/dish-manicoba.svg" },
+  { id: "suco-cupuacu", name: "Suco de Cupuaçu", price: 8, image: "assets/dish-suco-cupuacu.svg" },
+  { id: "arroz-paraense", name: "Arroz Paraense", price: 22, image: "assets/dish-arroz-paraense.svg" },
+  { id: "vatapa", name: "Vatapá", price: 18, image: "assets/dish-vatapa.svg" }
 ];
 
 const statusOptions = ["Recebido", "Em preparo", "Pronto"];
@@ -50,6 +50,7 @@ function ensureSeedData(force = false) {
         productId: "tacaca",
         name: "Tacacá",
         price: 15,
+        image: "assets/dish-tacaca.svg",
         quantity: 2,
         note: "Separar jambu."
       },
@@ -57,6 +58,7 @@ function ensureSeedData(force = false) {
         productId: "suco-cupuacu",
         name: "Suco de Cupuaçu",
         price: 8,
+        image: "assets/dish-suco-cupuacu.svg",
         quantity: 1,
         note: ""
       }
@@ -154,6 +156,7 @@ function handleAddItem(event) {
     productId: product.id,
     name: product.name,
     price: product.price,
+    image: product.image,
     quantity,
     note
   });
@@ -254,9 +257,12 @@ function populateStaticOptions() {
   document.getElementById("menu-products").innerHTML = products
     .map((product) => `
       <div class="product-row">
-        <div>
-          <strong>${product.name}</strong>
-          <span>${formatCurrency(product.price)}</span>
+        <div class="product-info">
+          <img class="product-thumb" src="${product.image}" alt="" aria-hidden="true">
+          <div>
+            <strong>${product.name}</strong>
+            <span>${formatCurrency(product.price)}</span>
+          </div>
         </div>
         <button class="ghost-button compact" type="button" data-product-id="${product.id}">Selecionar</button>
       </div>
@@ -336,8 +342,13 @@ function renderDraft() {
     container.className = "order-list";
     container.innerHTML = state.draftItems.map((item, index) => `
       <div class="order-line">
-        <strong>${item.quantity}x ${item.name}</strong>
-        <span>${formatCurrency(item.price * item.quantity)}${item.note ? ` - Obs.: ${escapeHtml(item.note)}` : ""}</span>
+        <div class="product-info">
+          <img class="product-thumb small" src="${item.image || productImageById(item.productId)}" alt="" aria-hidden="true">
+          <div>
+            <strong>${item.quantity}x ${item.name}</strong>
+            <span>${formatCurrency(item.price * item.quantity)}${item.note ? ` - Obs.: ${escapeHtml(item.note)}` : ""}</span>
+          </div>
+        </div>
         <div class="order-line-actions">
           <button class="ghost-button compact" type="button" data-remove-index="${index}">Remover</button>
         </div>
@@ -380,8 +391,13 @@ function renderKitchen() {
         <div class="order-list">
           ${order.items.map((item) => `
             <div class="order-line">
-              <strong>${item.quantity}x ${item.name}</strong>
-              <span>${item.note ? `Obs.: ${escapeHtml(item.note)}` : "Sem observações"}</span>
+              <div class="product-info">
+                <img class="product-thumb small" src="${item.image || productImageById(item.productId)}" alt="" aria-hidden="true">
+                <div>
+                  <strong>${item.quantity}x ${item.name}</strong>
+                  <span>${item.note ? `Obs.: ${escapeHtml(item.note)}` : "Sem observações"}</span>
+                </div>
+              </div>
             </div>
           `).join("")}
         </div>
@@ -412,8 +428,13 @@ function renderCashier() {
       .flatMap((order) => order.items.map((item) => ({ ...item, orderId: order.id, status: order.status })))
       .map((item) => `
         <div class="order-line">
-          <strong>${item.quantity}x ${item.name}</strong>
-          <span>${formatCurrency(item.price * item.quantity)} - ${item.status}${item.note ? ` - Obs.: ${escapeHtml(item.note)}` : ""}</span>
+          <div class="product-info">
+            <img class="product-thumb small" src="${item.image || productImageById(item.productId)}" alt="" aria-hidden="true">
+            <div>
+              <strong>${item.quantity}x ${item.name}</strong>
+              <span>${formatCurrency(item.price * item.quantity)} - ${item.status}${item.note ? ` - Obs.: ${escapeHtml(item.note)}` : ""}</span>
+            </div>
+          </div>
         </div>
       `)
       .join("");
@@ -562,6 +583,11 @@ function statusClass(status) {
     "Em preparo": "status-em-preparo",
     "Pronto": "status-pronto"
   }[status] || "status-recebido";
+}
+
+function productImageById(productId) {
+  const product = products.find((item) => item.id === productId);
+  return product ? product.image : "assets/dish-tacaca.svg";
 }
 
 function makeStatCard(label, value, caption) {

@@ -87,7 +87,7 @@ img {
 
 .app-header {
   align-items: center;
-  background: rgba(255, 255, 255, 0.94);
+  background: #ffffff;
   border-bottom: 1px solid var(--border);
   box-shadow: 0 4px 16px rgba(23, 38, 29, 0.05);
   display: flex;
@@ -106,25 +106,16 @@ img {
   min-width: 0;
 }
 
-.brand-mark {
-  align-items: center;
-  background: var(--primary-dark);
-  border: 1px solid rgba(255, 255, 255, 0.24);
+.brand-logo {
   border-radius: 8px;
-  color: #fff;
-  display: inline-flex;
   flex: 0 0 auto;
-  font-size: 0.86rem;
-  font-weight: 800;
-  height: 42px;
-  justify-content: center;
-  width: 42px;
+  height: 44px;
+  width: 44px;
 }
 
-.brand-mark.large {
-  font-size: 1rem;
-  height: 54px;
-  width: 54px;
+.brand-logo.large {
+  height: 64px;
+  width: 64px;
 }
 
 .app-header h1,
@@ -239,20 +230,61 @@ img {
   max-width: 42rem;
 }
 
-.qr-card {
-  align-content: center;
+.login-visual-card {
+  align-content: stretch;
   display: grid;
-  gap: 1rem;
-  justify-items: start;
+  gap: 1.1rem;
+  overflow: hidden;
+  padding: 0;
 }
 
-.qr-image {
+.visual-copy {
+  padding: 1.35rem 1.35rem 0;
+}
+
+.visual-copy h3 {
+  font-size: 1.3rem;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.visual-copy p:last-child {
+  color: var(--muted);
+  margin-bottom: 0;
+}
+
+.hero-illustration {
+  align-self: center;
+  aspect-ratio: 760 / 520;
+  object-fit: cover;
+  width: 100%;
+}
+
+.login-quick-access {
+  align-items: center;
+  background: var(--surface-soft);
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+}
+
+.login-quick-access strong {
+  display: block;
+  font-size: 0.92rem;
+}
+
+.login-quick-access .plain-link {
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.login-qr {
   background: #fff;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-soft);
-  padding: 0.75rem;
-  width: 210px;
+  border-radius: 6px;
+  padding: 0.25rem;
+  width: 58px;
 }
 
 .eyebrow {
@@ -461,16 +493,9 @@ a:focus-visible {
 }
 
 .module-icon {
-  align-items: center;
-  background: var(--surface-tint);
-  border: 1px solid var(--border);
   border-radius: 8px;
-  color: var(--primary-dark);
-  display: inline-flex;
-  font-size: 0.9rem;
-  height: 34px;
-  justify-content: center;
-  width: 34px;
+  height: 42px;
+  width: 42px;
 }
 
 .stat-card,
@@ -513,8 +538,28 @@ a:focus-visible {
   border: 1px solid var(--border);
   border-radius: 8px;
   display: flex;
+  gap: 0.75rem;
   justify-content: space-between;
   padding: 0.72rem;
+}
+
+.product-info {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.product-thumb {
+  border-radius: 8px;
+  flex: 0 0 auto;
+  height: 48px;
+  width: 48px;
+}
+
+.product-thumb.small {
+  height: 40px;
+  width: 40px;
 }
 
 .product-row strong,

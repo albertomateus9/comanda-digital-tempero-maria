@@ -1,0 +1,28 @@
+<svg width="760" height="520" viewBox="0 0 760 520" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Restaurante com comanda digital</title>
+  <desc id="desc">Ilustração de balcão, tablet de pedidos e pratos regionais.</desc>
+  <rect width="760" height="520" rx="28" fill="#EEF5EF"/>
+  <path d="M0 356C86 314 147 331 214 359C292 391 365 399 449 358C545 311 632 306 760 365V520H0V356Z" fill="#DDEBDD"/>
+  <rect x="88" y="112" width="238" height="282" rx="22" fill="#FFFFFF" stroke="#D7DFD8" stroke-width="3"/>
+  <rect x="116" y="142" width="182" height="34" rx="10" fill="#E5F5EC"/>
+  <rect x="116" y="196" width="182" height="26" rx="8" fill="#FFF4D7"/>
+  <rect x="116" y="240" width="142" height="26" rx="8" fill="#E9F1FF"/>
+  <rect x="116" y="284" width="168" height="26" rx="8" fill="#E5F5EC"/>
+  <rect x="116" y="336" width="182" height="34" rx="10" fill="#236344"/>
+  <circle cx="436" cy="230" r="91" fill="#FFFFFF" stroke="#D7DFD8" stroke-width="3"/>
+  <path d="M361 235C368 280 399 306 436 306C473 306 504 280 511 235H361Z" fill="#FFF4D7"/>
+  <path d="M377 236H495" stroke="#D9A839" stroke-width="12" stroke-linecap="round"/>
+  <path d="M431 165C456 163 474 176 481 199C456 202 438 190 431 165Z" fill="#BFD8C2"/>
+  <path d="M426 166C401 162 383 175 377 199C402 202 420 190 426 166Z" fill="#236344"/>
+  <rect x="536" y="144" width="132" height="176" rx="18" fill="#173F2C"/>
+  <rect x="554" y="166" width="96" height="112" rx="10" fill="#F8FAF6"/>
+  <rect x="568" y="184" width="68" height="12" rx="6" fill="#D9A839"/>
+  <rect x="568" y="212" width="54" height="10" rx="5" fill="#B8C7BB"/>
+  <rect x="568" y="238" width="68" height="10" rx="5" fill="#B8C7BB"/>
+  <circle cx="602" cy="298" r="8" fill="#D9A839"/>
+  <rect x="94" y="404" width="574" height="34" rx="17" fill="#173F2C"/>
+  <circle cx="152" cy="403" r="36" fill="#FFFFFF" stroke="#D7DFD8" stroke-width="3"/>
+  <circle cx="152" cy="403" r="20" fill="#AC4337"/>
+  <circle cx="604" cy="403" r="36" fill="#FFFFFF" stroke="#D7DFD8" stroke-width="3"/>
+  <circle cx="604" cy="403" r="20" fill="#D9A839"/>
+</svg>

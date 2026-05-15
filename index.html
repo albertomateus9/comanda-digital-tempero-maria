@@ -6,13 +6,14 @@
   <meta name="description" content="Protótipo profissional de comanda digital integrada para restaurante, com módulos de garçom, cozinha e caixa.">
   <meta name="theme-color" content="#1f4d39">
   <title>Comanda Digital Integrada - Tempero de Maria</title>
+  <link rel="icon" href="assets/logo-tempero-maria.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Ir para o conteúdo</a>
   <header class="app-header" data-auth-only hidden>
     <div class="brand-lockup">
-      <span class="brand-mark" aria-hidden="true">TM</span>
+      <img class="brand-logo" src="assets/logo-tempero-maria.svg" alt="" aria-hidden="true">
       <div>
         <p class="eyebrow">Tempero de Maria</p>
         <h1>Comanda Digital Integrada</h1>
@@ -34,7 +35,7 @@
       <div class="login-grid">
         <article class="card login-card">
           <div class="brand-lockup login-brand">
-            <span class="brand-mark large" aria-hidden="true">TM</span>
+            <img class="brand-logo large" src="assets/logo-tempero-maria.svg" alt="" aria-hidden="true">
             <div>
               <p class="eyebrow">Restaurante Tempero de Maria</p>
               <h2>Comanda Digital Integrada</h2>
@@ -55,15 +56,22 @@
           </form>
         </article>
 
-        <article class="card qr-card">
-          <div>
-            <p class="eyebrow">Demonstração publicada</p>
-            <h3>Acesse o protótipo pelo QR Code</h3>
+        <article class="card login-visual-card">
+          <div class="visual-copy">
+            <p class="eyebrow">Operação integrada</p>
+            <h3>Do pedido à conta, sem trocar de sistema.</h3>
+            <p>Uma demonstração visual para salão, cozinha e caixa acompanharem a mesma comanda em tempo real.</p>
           </div>
-          <img class="qr-image" src="assets/qrcode-site.png" alt="QR Code para acessar o protótipo no GitHub Pages">
-          <a class="plain-link" href="https://albertomateus9.github.io/comanda-digital-tempero-maria/" target="_blank" rel="noreferrer">
-            albertomateus9.github.io/comanda-digital-tempero-maria
-          </a>
+          <img class="hero-illustration" src="assets/hero-comanda.svg" alt="Ilustração de um restaurante usando comanda digital em tablet">
+          <div class="login-quick-access">
+            <img class="login-qr" src="assets/qrcode-site.png" alt="QR Code para acessar o protótipo no GitHub Pages">
+            <div>
+              <strong>Acesso rápido</strong>
+              <a class="plain-link" href="https://albertomateus9.github.io/comanda-digital-tempero-maria/" target="_blank" rel="noreferrer">
+                Abrir GitHub Pages
+              </a>
+            </div>
+          </div>
         </article>
       </div>
     </section>
@@ -79,22 +87,22 @@
 
       <div class="menu-grid">
         <button class="module-button accent-primary" type="button" data-screen-target="waiter-screen" data-testid="nav-waiter">
-          <span class="module-icon" aria-hidden="true">G</span>
+          <img class="module-icon" src="assets/icon-garcom.svg" alt="" aria-hidden="true">
           <span>Garçom</span>
           <small>Registrar pedidos por mesa</small>
         </button>
         <button class="module-button accent-warn" type="button" data-screen-target="kitchen-screen" data-testid="nav-kitchen">
-          <span class="module-icon" aria-hidden="true">C</span>
+          <img class="module-icon" src="assets/icon-cozinha.svg" alt="" aria-hidden="true">
           <span>Cozinha</span>
           <small>Acompanhar preparo e status</small>
         </button>
         <button class="module-button accent-ready" type="button" data-screen-target="cashier-screen" data-testid="nav-cashier">
-          <span class="module-icon" aria-hidden="true">X</span>
+          <img class="module-icon" src="assets/icon-caixa.svg" alt="" aria-hidden="true">
           <span>Caixa</span>
           <small>Conferir consumo e fechar conta</small>
         </button>
         <button class="module-button danger" type="button" data-action="reset-data" data-testid="reset-data">
-          <span class="module-icon" aria-hidden="true">R</span>
+          <img class="module-icon" src="assets/icon-reset.svg" alt="" aria-hidden="true">
           <span>Reiniciar dados</span>
           <small>Restaurar exemplos</small>
         </button>
@@ -231,7 +239,7 @@
     </section>
   </main>
 
-  <footer class="app-footer">
+  <footer class="app-footer" data-auth-only hidden>
     <div>
       <strong>Acesse o protótipo pelo QR Code</strong>
       <span>GitHub Pages: albertomateus9.github.io/comanda-digital-tempero-maria</span>

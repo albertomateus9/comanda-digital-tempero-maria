@@ -21,6 +21,7 @@ Demonstrar, em uma página web estática, como um restaurante pode registrar ped
 - Histórico local das últimas vendas finalizadas.
 - QR Code apontando para o GitHub Pages do projeto.
 - Layout responsivo para celular e desktop.
+- Identidade visual com logo, ilustração principal, ícones por módulo e imagens dos pratos.
 
 ## Refinamentos profissionais
 
@@ -28,6 +29,7 @@ Demonstrar, em uma página web estática, como um restaurante pode registrar ped
 - Estados vazios e botões desabilitados quando não há ação disponível.
 - Indicadores por etapa do fluxo para facilitar demonstrações.
 - Melhor contraste, foco visível e hierarquia de informação.
+- QR Code menos dominante na tela de login, mantendo acesso rápido sem competir com o formulário.
 - Estrutura preparada para publicação estática em GitHub Pages.
 
 ## Tecnologias usadas
